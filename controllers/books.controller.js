@@ -1,4 +1,4 @@
-const { boooks } = require("../models/mock");
+const { boooks } = require("../models");
 
 const getAllBooks = (req, res) => {
     res.json(books);
