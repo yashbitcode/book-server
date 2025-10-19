@@ -17,5 +17,3 @@ router.post("/", createBook);
 router.delete("/:id", deleteBookById);
 
 module.exports = router;
-
-// console.log(router.stack);

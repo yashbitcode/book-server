@@ -1,8 +1,18 @@
 const { booksTable } = require("../models/index");
 const db = require("../db/index");
-const { eq } = require("drizzle-orm");
+const { eq, sql } = require("drizzle-orm");
 
 const getAllBooks = async (req, res) => {
+    const searchQuery = req.query.search;
+
+    if (searchQuery) {
+        const data = await db
+            .select()
+            .from(booksTable)
+            .where(sql`to_tsvector('english', ${booksTable.title}) @@ to_tsquery('english', ${searchQuery})`);
+        return res.json(data);
+    }
+
     const data = await db.select().from(booksTable);
     return res.json(data);
 };
@@ -32,14 +42,17 @@ const createBook = async (req, res) => {
             return res.status(400).json({
                 error: "title required",
             });
-        
-        const [result] = await db.insert(booksTable).values({
-            title,
-            authorId,
-            description
-        }).returning({
-            id: booksTable.id
-        });
+
+        const [result] = await db
+            .insert(booksTable)
+            .values({
+                title,
+                authorId,
+                description,
+            })
+            .returning({
+                id: booksTable.id,
+            });
 
         return res.status(201).json({
             message: "Book created Successfully",
