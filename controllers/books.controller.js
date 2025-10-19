@@ -1,4 +1,4 @@
-const { booksTable } = require("../models/index");
+const { booksTable, authorsTable } = require("../models/index");
 const db = require("../db/index");
 const { eq, sql } = require("drizzle-orm");
 
@@ -10,6 +10,7 @@ const getAllBooks = async (req, res) => {
             .select()
             .from(booksTable)
             .where(sql`to_tsvector('english', ${booksTable.title}) @@ to_tsquery('english', ${searchQuery})`);
+
         return res.json(data);
     }
 
@@ -24,7 +25,8 @@ const getBookById = async (req, res) => {
         const book = await db
             .select()
             .from(booksTable)
-            .where(eq(booksTable.id, id));
+            .where(eq(booksTable.id, id))
+            .leftJoin(authorsTable, eq(booksTable.authorId, authorsTable.id));
 
         return res.json(book);
     } catch {

@@ -146,3 +146,17 @@
 [1760875033891] PATCH /books/a98b8f49-0563-489c-a3b7-7d488a80a6ab
 [1760875045077] GET /books/
 [1760875075114] PATCH /books/saoksoka
+[1760876209569] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876321955] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876334883] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd
+[1760876340661] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876477459] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876478500] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876510276] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876513863] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/
+[1760876520169] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876535003] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760876671803] GET /authors/fe29eeae-4b86-4e9c-95d2-538723fbf3bd/books
+[1760877477356] GET /books/87cc8a9c-df18-42eb-bd27-14d50c856813
+[1760877495177] GET /books/87cc8a9c-df18-42eb-bd27-14d50c856813
+[1760877571192] GET /books/87cc8a9c-df18-42eb-bd27-14d50c856813

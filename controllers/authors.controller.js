@@ -1,4 +1,4 @@
-const { authorsTable } = require("../models/index");
+const { authorsTable, booksTable } = require("../models/index");
 const db = require("../db/index");
 const { eq, sql } = require("drizzle-orm");
 
@@ -92,10 +92,25 @@ const deleteAuthorById = async (req, res) => {
     }
 };
 
+const getAllAuthorBooks = async (req, res) => {
+    const id = req.params.id;
+
+    try {
+        const authorBooks = await db.select().from(booksTable).where(eq(booksTable.authorId, id));
+        return res.json(authorBooks);
+    } catch(err) {
+        console.log(err)
+        return res.status(404).send({
+            error: `Author doesn't exist with the id ${id}`,
+        });
+    }
+}
+
 module.exports = {
     getAllAuthors,
     getAuthorById,
     createAuthor,
     updateAuthor,
     deleteAuthorById,
+    getAllAuthorBooks
 };
