@@ -65,6 +65,23 @@ const createBook = async (req, res) => {
     }
 };
 
+const updateBook = async (req, res) => {
+    const id = req.params.id;
+    const updatedFields = Object.fromEntries(Object.entries(req.body));
+
+    try {
+        await db.update(booksTable).set(updatedFields).where(eq(booksTable.id, id));
+        return res.status(201).json({
+            message: "Book updated Successfully",
+            id,
+        });
+    } catch {
+        res.json({
+            error: "Update failed",
+        });
+    }
+};
+
 const deleteBookById = async (req, res) => {
     const id = req.params.id;
 
@@ -82,5 +99,6 @@ module.exports = {
     getAllBooks,
     getBookById,
     createBook,
+    updateBook,
     deleteBookById,
 };

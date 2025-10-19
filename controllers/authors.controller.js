@@ -64,16 +64,10 @@ const createAuthor = async (req, res) => {
 
 const updateAuthor = async (req, res) => {
     const id = req.params.id;
-    const { firstName, lastName, email } = req.body;
-
-    const obj = {};
-
-    if (firstName) obj.firstName = firstName;
-    if (lastName) obj.lastName = lastName;
-    if (email) obj.email = email;
+    const updatedFields = Object.fromEntries(Object.entries(req.body));
 
     try {
-        await db.update(authorsTable).set(obj).where(eq(authorsTable.id, id));
+        await db.update(authorsTable).set(updatedFields).where(eq(authorsTable.id, id));
         return res.status(201).json({
             message: "Author updated Successfully",
             id,
