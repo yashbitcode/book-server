@@ -1,9 +1,8 @@
 require("dotenv/config");
 const express = require("express");
 const { logger } = require("./middlewares/loggerMiddleware");
-const booksTable = require("./models/book.model");
-const db = require("./db/index");
 const bookRouter = require("./routes/books.route");
+const authorRouter = require("./routes/authors.route");
 
 const app = express();
 const PORT = 8000;
@@ -13,6 +12,9 @@ app.use(logger);
 
 app.get("/", (req, res) => res.send("Hi Bro!!"));
 app.use("/books", bookRouter);
+app.use("/authors", authorRouter);
+
+app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));
 
 // app.use((req, res, next) => {
 //     req.time = Date.now();
@@ -28,5 +30,3 @@ app.use("/books", bookRouter);
 // });
 
 // app.get("/", (req, res) => res.send("hi"));
-
-app.listen(PORT, () => console.log(`Server running on PORT ${PORT}`));

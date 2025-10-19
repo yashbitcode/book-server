@@ -9,7 +9,9 @@ const getAllAuthors = async (req, res) => {
         const data = await db
             .select()
             .from(authorsTable)
-            .where(sql`to_tsvector('english', ${authorsTable.name}) @@ to_tsquery('english', ${searchQuery})`);
+            .where(
+                sql`to_tsvector('english', ${authorsTable.name}) @@ to_tsquery('english', ${searchQuery})`
+            );
         return res.json(data);
     }
 
@@ -43,7 +45,7 @@ const createAuthor = async (req, res) => {
             .values({
                 firstName,
                 lastName,
-                email
+                email,
             })
             .returning({
                 id: authorsTable.id,
@@ -56,6 +58,29 @@ const createAuthor = async (req, res) => {
     } catch {
         res.status(400).json({
             error: "Invalid entries or necessary entries missing",
+        });
+    }
+};
+
+const updateAuthor = async (req, res) => {
+    const id = req.params.id;
+    const { firstName, lastName, email } = req.body;
+
+    const obj = {};
+
+    if (firstName) obj.firstName = firstName;
+    if (lastName) obj.lastName = lastName;
+    if (email) obj.email = email;
+
+    try {
+        await db.update(authorsTable).set(obj).where(eq(authorsTable.id, id));
+        return res.status(201).json({
+            message: "Author updated Successfully",
+            id,
+        });
+    } catch {
+        res.json({
+            error: "Update failed",
         });
     }
 };
@@ -77,5 +102,6 @@ module.exports = {
     getAllAuthors,
     getAuthorById,
     createAuthor,
+    updateAuthor,
     deleteAuthorById,
 };
